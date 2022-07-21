@@ -236,29 +236,36 @@ Specify if we want to include the git commit author's name, at the end of each c
 > **Note** that the author name is the name that was given in the user's Git config, refer to [Git Configuration](https://www.git-scm.com/book/en/v2/Customizing-Git-Git-Configuration) for more info. In other words, this is **not** the same as a GitHub login username.
 
 ```sh
+# default format, without any argument
 lerna version --conventional-commits --changelog-include-commit-author-fullname
+# **deps:** update dependency git-url-parse to v12 ([978bf36](https://github.com/ghiscoding/lerna-lite/commit/978bf36)) (Renovate Bot)
+
+# custom format with %a token
+lerna version --conventional-commits --changelog-include-commit-author-fullname " by <%a>"
+# **deps:** update dependency git-url-parse to v12 ([978bf36](https://github.com/ghiscoding/lerna-lite/commit/978bf36)) by <Renovate Bot>
 ```
 
-See below for a sample of a changelog entry with the author's full name (note the url was shorten up for simplicity)
-#### Default Format
-The default format will append the author's name (wrapped in `()`) to the end of the commit message
+### `--changelog-include-commit-author-username [msg]`
+Specify if we want to include the git commit author's name, at the end of each changelog commit entry, this is only available when using `--conventional-commits` with changelogs. The default format will append the author's name at the end of each commit entry and wrapped in `()`, for exampe "feat: commit message (Author Name)". We could also use a custom format by providing the `%a` token. Note that in every case, the author's name will always be appended as a suffix to each changelog commit entry.
+
+> **Note** that this requires access to the GitHub API with necessary permissions to execute the query, see below for more info.
 
 ```sh
-* **deps:** update dependency git-url-parse to v12 ([978bf36](https://github.com/ghiscoding/lerna-lite/commit/978bf36)) (Renovate Bot)
+# default format, without any argument
+lerna version --conventional-commits --changelog-include-commit-author-username
+# **deps:** update dependency git-url-parse to v12 ([978bf36](https://github.com/ghiscoding/lerna-lite/commit/978bf36)) (@renovate-bot)
+
+# custom format with %a token
+lerna version --conventional-commits --changelog-include-commit-author-username " by @%a"
+# **deps:** update dependency git-url-parse to v12 ([978bf36](https://github.com/ghiscoding/lerna-lite/commit/978bf36)) by @renovate-bot
 ```
 
-#### Custom Format
-If we want to provide a default format, we can do so by using the `%a` token
+To authenticate with GitHub, the following environment variables can be defined.
 
-```sh
-lerna version --conventional-commits --changelog-include-commit-author-fullname " by _%a_"
-```
+- `GH_TOKEN` (required) - Your GitHub authentication token (under Settings > Developer settings > Personal access tokens).
+- `GHE_API_URL` - When using GitHub Enterprise, an absolute URL to the API.
+- `GHE_VERSION` - When using GitHub Enterprise, the currently installed GHE version. [Supports the following versions](https://github.com/octokit/plugin-enterprise-rest.js).
 
-will show the following (the use of `_` in this case would display the name in italic)
-
-```sh
-* **deps:** update dependency git-url-parse to v12 ([978bf36](https://github.com/ghiscoding/lerna-lite/commit/978bf36)) by _Renovate Bot_
-```
 
 ### `--changelog-header-message <msg>`
 

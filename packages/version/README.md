@@ -242,7 +242,7 @@ lerna version --conventional-commits --changelog-include-commit-author-fullname
 
 # custom format with %a token
 lerna version --conventional-commits --changelog-include-commit-author-fullname " (by _%a_)"
-# **deps:** update dependency git-url-parse to v12 ([978bf36](https://github.com/ghiscoding/lerna-lite/commit/978bf36)) by <Renovate Bot>
+# **deps:** update dependency git-url-parse to v12 ([978bf36](https://github.com/ghiscoding/lerna-lite/commit/978bf36)) (by _Renovate Bot_)
 ```
 
 ### `--changelog-include-commit-author-username [msg]`
